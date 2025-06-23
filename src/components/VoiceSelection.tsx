@@ -25,6 +25,7 @@ interface VoiceSelectionProps {
   agentGender: string;
   onGenderChange: (gender: string) => void;
   greetingMessage?: string;
+  darkMode?: boolean;
 }
 
 const VoiceSelection: React.FC<VoiceSelectionProps> = ({
@@ -32,7 +33,8 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
   onVoiceSelect,
   agentGender,
   onGenderChange,
-  greetingMessage
+  greetingMessage,
+  darkMode = false
 }) => {
   const [playingVoice, setPlayingVoice] = useState<string | null>(null);
 
@@ -49,17 +51,17 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
   const currentVoices = VOICE_OPTIONS[agentGender as keyof typeof VOICE_OPTIONS] || VOICE_OPTIONS.female;
 
   return (
-    <Card>
+    <Card className="dark:bg-gray-800 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
-          <Volume2 className="w-5 h-5 text-blue-600" />
-          <span>Choose Your AI Voice</span>
+          <Volume2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+          <span className="dark:text-white">Choose Your AI Voice</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Gender Selection */}
         <div className="space-y-3">
-          <h4 className="font-medium text-gray-900">Voice Type</h4>
+          <h4 className="font-medium text-gray-900 dark:text-white">Voice Type</h4>
           <div className="flex space-x-3">
             <Button
               variant={agentGender === 'female' ? 'default' : 'outline'}
@@ -80,22 +82,22 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
 
         {/* Voice Options */}
         <div className="space-y-3">
-          <h4 className="font-medium text-gray-900">Select Voice</h4>
+          <h4 className="font-medium text-gray-900 dark:text-white">Select Voice</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {currentVoices.map((voice) => (
               <div
                 key={voice.id}
                 className={`p-4 border rounded-lg cursor-pointer transition-all ${
                   selectedVoice === voice.id
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-400'
+                    : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 dark:bg-gray-700/50'
                 }`}
                 onClick={() => onVoiceSelect(voice.id)}
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-gray-900">{voice.name}</p>
-                    <Badge variant="secondary" className="text-xs">
+                    <p className="font-medium text-gray-900 dark:text-white">{voice.name}</p>
+                    <Badge variant="secondary" className="text-xs dark:bg-gray-600 dark:text-gray-300">
                       {voice.provider}
                     </Badge>
                   </div>
@@ -106,6 +108,7 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
                       e.stopPropagation();
                       handlePlayVoice(voice.id);
                     }}
+                    className="dark:hover:bg-gray-600"
                   >
                     {playingVoice === voice.id ? (
                       <Pause className="w-4 h-4" />
@@ -121,13 +124,13 @@ const VoiceSelection: React.FC<VoiceSelectionProps> = ({
 
         {/* Preview Message */}
         {greetingMessage && (
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h4 className="font-medium text-gray-900 mb-2">Preview Message</h4>
-            <p className="text-gray-700 text-sm italic">"{greetingMessage}"</p>
+          <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+            <h4 className="font-medium text-gray-900 dark:text-white mb-2">Preview Message</h4>
+            <p className="text-gray-700 dark:text-gray-300 text-sm italic">"{greetingMessage}"</p>
             <Button
               size="sm"
               variant="outline"
-              className="mt-2"
+              className="mt-2 dark:border-gray-600 dark:text-gray-300"
               onClick={() => handlePlayVoice('preview')}
             >
               <Play className="w-3 h-3 mr-1" />

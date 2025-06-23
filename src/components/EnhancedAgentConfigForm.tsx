@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -52,13 +51,15 @@ interface EnhancedAgentConfigFormProps {
   onNextStep: () => void;
   onPrevStep: () => void;
   selectedTemplate: any;
+  darkMode?: boolean;
 }
 
 const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
   currentStep,
   onNextStep,
   onPrevStep,
-  selectedTemplate
+  selectedTemplate,
+  darkMode = false
 }) => {
   // Form state - incorporating all fields from your code
   const [formData, setFormData] = useState({
@@ -146,13 +147,13 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
       case 2:
         return (
           <div className="space-y-6">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-3">
-                  <Building className="w-5 h-5 text-blue-600" />
-                  <span>Business Information</span>
+                  <Building className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span className="dark:text-white">Business Information</span>
                   {selectedTemplate && (
-                    <Badge className="bg-blue-100 text-blue-700">
+                    <Badge className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
                       Using {selectedTemplate.name} template
                     </Badge>
                   )}
@@ -161,7 +162,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="businessName" className="text-base font-medium">
+                    <Label htmlFor="businessName" className="text-base font-medium dark:text-gray-200">
                       Business Name *
                     </Label>
                     <Input
@@ -169,19 +170,19 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
                       placeholder="Enter your business name"
-                      className="text-base p-3"
+                      className="text-base p-3 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="industry" className="text-base font-medium">
+                    <Label htmlFor="industry" className="text-base font-medium dark:text-gray-200">
                       Industry Type *
                     </Label>
                     <select 
                       id="industry"
                       value={formData.industry}
                       onChange={(e) => handleInputChange('industry', e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     >
                       {INDUSTRIES.map((industry) => (
                         <option key={industry.id} value={industry.id}>
@@ -193,7 +194,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="description" className="text-base font-medium">
+                  <Label htmlFor="description" className="text-base font-medium dark:text-gray-200">
                     Business Description, Products & Services *
                   </Label>
                   <Textarea
@@ -201,12 +202,12 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                     value={formData.description}
                     onChange={(e) => handleInputChange('description', e.target.value)}
                     placeholder="Describe what your business does, your products and services"
-                    className="min-h-24 text-base p-3"
+                    className="min-h-24 text-base p-3 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="website" className="text-base font-medium">
+                  <Label htmlFor="website" className="text-base font-medium dark:text-gray-200">
                     Website (optional)
                   </Label>
                   <Input
@@ -215,7 +216,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                     value={formData.website}
                     onChange={(e) => handleInputChange('website', e.target.value)}
                     placeholder="https://yourwebsite.com"
-                    className="text-base p-3"
+                    className="text-base p-3 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
                 </div>
               </CardContent>
@@ -226,24 +227,24 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
       case 3:
         return (
           <div className="space-y-6">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-3">
-                  <User className="w-5 h-5 text-blue-600" />
-                  <span>AI Agent Setup</span>
+                  <User className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <span className="dark:text-white">AI Agent Setup</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="agentType" className="text-base font-medium">
+                    <Label htmlFor="agentType" className="text-base font-medium dark:text-gray-200">
                       AI Agent Type *
                     </Label>
                     <select 
                       id="agentType"
                       value={formData.agent_type}
                       onChange={(e) => handleInputChange('agent_type', e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     >
                       {relevantAgentTypes.map((type) => (
                         <option key={type.id} value={type.id}>
@@ -254,7 +255,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="agentName" className="text-base font-medium">
+                    <Label htmlFor="agentName" className="text-base font-medium dark:text-gray-200">
                       AI Agent's Name *
                     </Label>
                     <Input
@@ -262,13 +263,13 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                       value={formData.agent_person_name}
                       onChange={(e) => handleInputChange('agent_person_name', e.target.value)}
                       placeholder="Enter a name for your AI assistant"
-                      className="text-base p-3"
+                      className="text-base p-3 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="greetingMessage" className="text-base font-medium">
+                  <Label htmlFor="greetingMessage" className="text-base font-medium dark:text-gray-200">
                     Greeting Message
                   </Label>
                   <Textarea
@@ -276,22 +277,22 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                     value={formData.greeting_message}
                     onChange={(e) => handleInputChange('greeting_message', e.target.value)}
                     placeholder="Enter how your AI assistant should greet customers"
-                    className="min-h-20 text-base p-3"
+                    className="min-h-20 text-base p-3 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                   />
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     This message will be the first thing customers hear when they interact with your AI agent.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="personality" className="text-base font-medium">
+                  <Label htmlFor="personality" className="text-base font-medium dark:text-gray-200">
                     Personality Style
                   </Label>
                   <select 
                     id="personality"
                     value={formData.personality}
                     onChange={(e) => handleInputChange('personality', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                   >
                     <option value="professional">Professional & Courteous</option>
                     <option value="friendly">Friendly & Helpful</option>
@@ -313,6 +314,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
               agentGender={formData.ai_voice}
               onGenderChange={(gender) => handleInputChange('ai_voice', gender)}
               greetingMessage={formData.greeting_message}
+              darkMode={darkMode}
             />
           </div>
         );
@@ -320,17 +322,18 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
       case 5:
         return (
           <div className="space-y-6">
-            <Card>
+            <Card className="dark:bg-gray-800 dark:border-gray-700">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <Settings className="w-5 h-5 text-blue-600" />
-                    <span>Features & Settings</span>
+                    <Settings className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <span className="dark:text-white">Features & Settings</span>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowAdvanced(!showAdvanced)}
+                    className="dark:border-gray-600 dark:text-gray-300"
                   >
                     {showAdvanced ? 'Simple View' : 'Advanced View'}
                   </Button>
@@ -339,13 +342,13 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
               <CardContent className="space-y-6">
                 {/* Basic Features */}
                 <div className="space-y-4">
-                  <h4 className="font-semibold text-gray-900">Core Features</h4>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">Core Features</h4>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="space-y-1">
-                        <h4 className="font-medium">Smart Responses</h4>
-                        <p className="text-sm text-gray-600">AI automatically responds to common questions</p>
+                        <h4 className="font-medium dark:text-white">Smart Responses</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">AI automatically responds to common questions</p>
                       </div>
                       <Switch
                         checked={formData.features.autoResponse}
@@ -353,10 +356,10 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                       />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="space-y-1">
-                        <h4 className="font-medium">Knowledge Base</h4>
-                        <p className="text-sm text-gray-600">Connect to your company information</p>
+                        <h4 className="font-medium dark:text-white">Knowledge Base</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Connect to your company information</p>
                       </div>
                       <Switch
                         checked={formData.features.knowledgeBase}
@@ -364,10 +367,10 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                       />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="space-y-1">
-                        <h4 className="font-medium">Human Handoff</h4>
-                        <p className="text-sm text-gray-600">Transfer complex queries to staff</p>
+                        <h4 className="font-medium dark:text-white">Human Handoff</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Transfer complex queries to staff</p>
                       </div>
                       <Switch
                         checked={formData.features.humanHandoff}
@@ -375,10 +378,10 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                       />
                     </div>
 
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                       <div className="space-y-1">
-                        <h4 className="font-medium">Analytics</h4>
-                        <p className="text-sm text-gray-600">Track performance and conversations</p>
+                        <h4 className="font-medium dark:text-white">Analytics</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Track performance and conversations</p>
                       </div>
                       <Switch
                         checked={formData.features.analytics}
@@ -390,12 +393,12 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
 
                 {/* Advanced Settings */}
                 {showAdvanced && (
-                  <div className="space-y-4 pt-6 border-t border-gray-200">
-                    <h4 className="font-semibold text-gray-900">Advanced Settings</h4>
+                  <div className="space-y-4 pt-6 border-t border-gray-200 dark:border-gray-600">
+                    <h4 className="font-semibold text-gray-900 dark:text-white">Advanced Settings</h4>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="temperature" className="text-base font-medium">
+                        <Label htmlFor="temperature" className="text-base font-medium dark:text-gray-200">
                           Response Creativity ({formData.temperature}%)
                         </Label>
                         <input
@@ -407,14 +410,14 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                           onChange={(e) => handleInputChange('temperature', parseInt(e.target.value))}
                           className="w-full"
                         />
-                        <p className="text-sm text-gray-600">Higher values make responses more creative</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Higher values make responses more creative</p>
                       </div>
 
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h5 className="font-medium">Voice Mail</h5>
-                            <p className="text-sm text-gray-600">Enable voice mail functionality</p>
+                            <h5 className="font-medium dark:text-white">Voice Mail</h5>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Enable voice mail functionality</p>
                           </div>
                           <Switch
                             checked={formData.features.voiceMail}
@@ -424,8 +427,8 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
 
                         <div className="flex items-center justify-between">
                           <div>
-                            <h5 className="font-medium">Escalation Alerts</h5>
-                            <p className="text-sm text-gray-600">Get notified of escalated calls</p>
+                            <h5 className="font-medium dark:text-white">Escalation Alerts</h5>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">Get notified of escalated calls</p>
                           </div>
                           <Switch
                             checked={formData.features.escalation}
@@ -443,59 +446,59 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
 
       case 6:
         return (
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
-                <span>Review & Launch</span>
+                <span className="dark:text-white">Review & Launch</span>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                <h3 className="font-semibold text-green-800 mb-4">Configuration Summary</h3>
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6">
+                <h3 className="font-semibold text-green-800 dark:text-green-300 mb-4">Configuration Summary</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Business Name:</span>
-                      <span className="font-medium">{formData.name}</span>
+                      <span className="text-gray-600 dark:text-gray-400">Business Name:</span>
+                      <span className="font-medium dark:text-gray-200">{formData.name}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Industry:</span>
-                      <span className="font-medium">
+                      <span className="text-gray-600 dark:text-gray-400">Industry:</span>
+                      <span className="font-medium dark:text-gray-200">
                         {INDUSTRIES.find(i => i.id === formData.industry)?.name}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Agent Type:</span>
-                      <span className="font-medium">
+                      <span className="text-gray-600 dark:text-gray-400">Agent Type:</span>
+                      <span className="font-medium dark:text-gray-200">
                         {relevantAgentTypes.find(t => t.id === formData.agent_type)?.name}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Agent Name:</span>
-                      <span className="font-medium">{formData.agent_person_name}</span>
+                      <span className="text-gray-600 dark:text-gray-400">Agent Name:</span>
+                      <span className="font-medium dark:text-gray-200">{formData.agent_person_name}</span>
                     </div>
                   </div>
                   
                   <div className="space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Voice:</span>
-                      <span className="font-medium">{formData.voice} ({formData.ai_voice})</span>
+                      <span className="text-gray-600 dark:text-gray-400">Voice:</span>
+                      <span className="font-medium dark:text-gray-200">{formData.voice} ({formData.ai_voice})</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Personality:</span>
-                      <span className="font-medium capitalize">{formData.personality}</span>
+                      <span className="text-gray-600 dark:text-gray-400">Personality:</span>
+                      <span className="font-medium capitalize dark:text-gray-200">{formData.personality}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Features:</span>
-                      <span className="font-medium">
+                      <span className="text-gray-600 dark:text-gray-400">Features:</span>
+                      <span className="font-medium dark:text-gray-200">
                         {Object.values(formData.features).filter(Boolean).length} enabled
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Template:</span>
-                      <span className="font-medium">{selectedTemplate?.name || 'Custom'}</span>
+                      <span className="text-gray-600 dark:text-gray-400">Template:</span>
+                      <span className="font-medium dark:text-gray-200">{selectedTemplate?.name || 'Custom'}</span>
                     </div>
                   </div>
                 </div>
@@ -506,7 +509,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="flex items-center space-x-2 px-8"
+                  className="flex items-center space-x-2 px-8 dark:border-gray-600 dark:text-gray-300"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Preview Agent</span>
@@ -515,7 +518,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                 <Button 
                   variant="outline" 
                   size="lg"
-                  className="flex items-center space-x-2 px-8"
+                  className="flex items-center space-x-2 px-8 dark:border-gray-600 dark:text-gray-300"
                 >
                   <Play className="w-4 h-4" />
                   <span>Test Agent</span>
@@ -530,7 +533,7 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
                 </Button>
               </div>
 
-              <div className="text-center text-sm text-gray-600">
+              <div className="text-center text-sm text-gray-600 dark:text-gray-400">
                 Your AI agent is ready to go live! You can always modify these settings later from your dashboard.
               </div>
             </CardContent>
@@ -595,13 +598,13 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
           variant="outline"
           onClick={onPrevStep}
           disabled={currentStep === 1}
-          className="flex items-center space-x-2 px-6"
+          className="flex items-center space-x-2 px-6 dark:border-gray-600 dark:text-gray-300"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Previous</span>
         </Button>
 
-        {currentStep < steps.length ? (
+        {currentStep < 6 ? (
           <Button
             onClick={onNextStep}
             className="bg-blue-600 hover:bg-blue-700 text-white flex items-center space-x-2 px-6"
