@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { 
   Settings, 
@@ -29,21 +27,11 @@ const AgentConfigPage = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   const totalSteps = 6;
-  const progress = (currentStep / totalSteps) * 100;
 
   const navItems = [
     { id: 'create', label: 'Create Agent', icon: Plus },
     { id: 'templates', label: 'Templates', icon: FileText },
     { id: 'settings', label: 'Settings', icon: Settings }
-  ];
-
-  const steps = [
-    { id: 1, title: 'Template', completed: currentStep > 1 },
-    { id: 2, title: 'Business', completed: currentStep > 2 },
-    { id: 3, title: 'Agent', completed: currentStep > 3 },
-    { id: 4, title: 'Voice', completed: currentStep > 4 },
-    { id: 5, title: 'features', completed: currentStep > 5 },
-    { id: 6, title: 'Launch', completed: currentStep > 6 }
   ];
 
   const toggleDarkMode = () => {
@@ -243,7 +231,7 @@ const AgentConfigPage = () => {
         {/* Main Content */}
         <div className="flex-1 p-8">
           <div className="max-w-5xl mx-auto">
-            {/* Header with Enhanced Progress */}
+            {/* Simplified Header */}
             <div className="mb-8">
               <div className="flex items-center justify-between mb-6">
                 <div>
@@ -252,59 +240,9 @@ const AgentConfigPage = () => {
                     Set up your intelligent assistant in just a few simple steps
                   </p>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1">
-                    Step {currentStep} of {totalSteps}
-                  </Badge>
-                  <Badge variant="secondary" className="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-3 py-1">
-                    In Progress
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Enhanced Visual Progress Bar */}
-              <div className="space-y-6">
-                <div className="relative">
-                  <div className="flex justify-between mb-4">
-                    {steps.map((step, index) => (
-                      <div key={step.id} className="flex flex-col items-center space-y-2">
-                        <div className={`relative w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                          step.completed 
-                            ? 'bg-green-500 text-white shadow-lg shadow-green-200 dark:shadow-green-900/30' 
-                            : currentStep === step.id 
-                              ? 'bg-blue-500 text-white shadow-lg shadow-blue-200 dark:shadow-blue-900/30 ring-4 ring-blue-100 dark:ring-blue-900/30' 
-                              : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
-                        }`}>
-                          {step.completed ? (
-                            <CheckCircle className="w-5 h-5" />
-                          ) : (
-                            <span>{step.id}</span>
-                          )}
-                        </div>
-                        <span className={`text-xs font-medium text-center min-w-12 ${
-                          step.completed 
-                            ? 'text-green-600 dark:text-green-400' 
-                            : currentStep === step.id 
-                              ? 'text-blue-600 dark:text-blue-400' 
-                              : 'text-gray-400 dark:text-gray-500'
-                        }`}>
-                          {step.title}
-                        </span>
-                        
-                        {/* Connection Line */}
-                        {index < steps.length - 1 && (
-                          <div className={`absolute top-5 left-10 w-full h-0.5 -z-10 transition-all duration-300 ${
-                            step.completed ? 'bg-green-500' : 'bg-gray-200 dark:bg-gray-700'
-                          }`} style={{ width: 'calc(100% - 2.5rem)' }} />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Animated Progress Line */}
-                  <div className="absolute top-5 left-5 h-0.5 bg-gradient-to-r from-green-500 to-blue-500 transition-all duration-500 ease-out -z-10"
-                       style={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }} />
-                </div>
+                <Badge variant="secondary" className="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-3 py-1">
+                  In Progress
+                </Badge>
               </div>
             </div>
 

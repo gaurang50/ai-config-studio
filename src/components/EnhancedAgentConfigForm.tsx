@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
+import { Progress } from '@/components/ui/progress';
 import { 
   ArrowLeft, 
   ArrowRight, 
@@ -554,36 +555,36 @@ const EnhancedAgentConfigForm: React.FC<EnhancedAgentConfigFormProps> = ({
     { id: 6, title: 'Review & Launch', completed: currentStep > 6 }
   ];
 
+  const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
+
   return (
     <div className="space-y-8">
-      {/* Progress Steps */}
-      <div className="hidden md:flex justify-between items-center">
-        {steps.map((step) => (
-          <StepIndicator
-            key={step.id}
-            stepNumber={step.id}
-            title={step.title}
-            isActive={currentStep === step.id}
-            isCompleted={step.completed}
-          />
-        ))}
-      </div>
-
-      {/* Mobile Progress */}
-      <div className="md:hidden">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-sm font-medium text-gray-600">
-            Step {currentStep} of {steps.length}
-          </span>
-          <span className="text-sm text-gray-500">
-            {steps.find(s => s.id === currentStep)?.title}
-          </span>
+      {/* Single Progress Bar */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              {steps.find(s => s.id === currentStep)?.title}
+            </h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Step {currentStep} of {steps.length}
+            </p>
+          </div>
+          <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">
+            {Math.round(progress)}% Complete
+          </Badge>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div 
-            className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(currentStep / steps.length) * 100}%` }}
-          />
+        
+        <div className="space-y-2">
+          <Progress value={progress} className="h-2" />
+          <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+            <span>Template</span>
+            <span>Business</span>
+            <span>Agent</span>
+            <span>Voice</span>
+            <span>Features</span>
+            <span>Launch</span>
+          </div>
         </div>
       </div>
 
