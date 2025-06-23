@@ -11,10 +11,13 @@ import {
   FileText, 
   ArrowLeft,
   CheckCircle,
-  Circle
+  Circle,
+  Eye,
+  Play,
+  Rocket
 } from 'lucide-react';
 import TemplateSelector from './TemplateSelector';
-import AgentConfigForm from './AgentConfigForm';
+import EnhancedAgentConfigForm from './EnhancedAgentConfigForm';
 
 const AgentConfigPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,7 +25,7 @@ const AgentConfigPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [showTemplateSelector, setShowTemplateSelector] = useState(false);
 
-  const totalSteps = 4;
+  const totalSteps = 6;
   const progress = (currentStep / totalSteps) * 100;
 
   const navItems = [
@@ -33,9 +36,11 @@ const AgentConfigPage = () => {
 
   const steps = [
     { id: 1, title: 'Choose Template', completed: currentStep > 1 },
-    { id: 2, title: 'Basic Info', completed: currentStep > 2 },
-    { id: 3, title: 'Configuration', completed: currentStep > 3 },
-    { id: 4, title: 'Review & Deploy', completed: currentStep > 4 }
+    { id: 2, title: 'Business Info', completed: currentStep > 2 },
+    { id: 3, title: 'Agent Setup', completed: currentStep > 3 },
+    { id: 4, title: 'Voice Selection', completed: currentStep > 4 },
+    { id: 5, title: 'Features', completed: currentStep > 5 },
+    { id: 6, title: 'Review & Launch', completed: currentStep > 6 }
   ];
 
   if (activeNav === 'templates') {
@@ -158,29 +163,64 @@ const AgentConfigPage = () => {
             </button>
           ))}
         </nav>
+
+        {/* Quick Actions */}
+        <div className="mt-8 pt-8 border-t border-gray-200">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Quick Actions</h3>
+          <div className="space-y-2">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="w-full justify-start text-left"
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              Preview Agent
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="w-full justify-start text-left"
+            >
+              <Play className="w-4 h-4 mr-2" />
+              Test Agent
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Header with Progress */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">Create Your AI Agent</h2>
-                <p className="text-gray-600 mt-1">Step {currentStep} of {totalSteps}</p>
+                <h2 className="text-3xl font-bold text-gray-900">Create Your AI Agent</h2>
+                <p className="text-gray-600 mt-2 text-lg">
+                  Set up your intelligent assistant in just a few simple steps
+                </p>
               </div>
-              <Badge variant="secondary" className="bg-blue-100 text-blue-700">
-                In Progress
-              </Badge>
+              <div className="flex items-center space-x-3">
+                <Badge variant="secondary" className="bg-blue-100 text-blue-700 px-3 py-1">
+                  Step {currentStep} of {totalSteps}
+                </Badge>
+                <Badge variant="secondary" className="bg-orange-100 text-orange-700 px-3 py-1">
+                  In Progress
+                </Badge>
+              </div>
             </div>
 
             {/* Enhanced Progress Bar */}
             <div className="space-y-4">
-              <Progress value={progress} className="h-2" />
+              <div className="flex items-center space-x-4">
+                <Progress value={progress} className="flex-1 h-3" />
+                <span className="text-sm font-medium text-gray-600 min-w-12">
+                  {Math.round(progress)}%
+                </span>
+              </div>
               
-              {/* Step Indicators */}
-              <div className="flex justify-between">
+              {/* Step Indicators - Desktop */}
+              <div className="hidden lg:flex justify-between">
                 {steps.map((step) => (
                   <div key={step.id} className="flex items-center space-x-2">
                     {step.completed ? (
@@ -226,40 +266,70 @@ const AgentConfigPage = () => {
             </div>
           ) : currentStep === 1 ? (
             <Card className="p-8">
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                  <FileText className="w-8 h-8 text-blue-600" />
+              <div className="text-center space-y-8">
+                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                  <Rocket className="w-10 h-10 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    Choose Your Starting Point
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    Let's Build Your AI Agent
                   </h3>
-                  <p className="text-gray-600">
-                    Select a pre-built template or start from scratch to create your AI agent
+                  <p className="text-gray-600 text-lg max-w-md mx-auto">
+                    Choose your starting point to create an intelligent assistant that works perfectly for your business
                   </p>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-lg mx-auto">
                   <Button
                     onClick={() => setShowTemplateSelector(true)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white flex items-center space-x-2"
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white flex items-center space-x-3 px-8 py-4"
                   >
-                    <FileText className="w-4 h-4" />
-                    <span>Use Template</span>
+                    <FileText className="w-5 h-5" />
+                    <div className="text-left">
+                      <div className="font-semibold">Use Template</div>
+                      <div className="text-sm opacity-90">Start with a proven setup</div>
+                    </div>
                   </Button>
                   <Button
                     variant="outline"
+                    size="lg"
                     onClick={() => setCurrentStep(2)}
-                    className="flex items-center space-x-2"
+                    className="flex items-center space-x-3 px-8 py-4 border-2"
                   >
-                    <Plus className="w-4 h-4" />
-                    <span>Start from Scratch</span>
+                    <Plus className="w-5 h-5" />
+                    <div className="text-left">
+                      <div className="font-semibold">Start from Scratch</div>
+                      <div className="text-sm text-gray-600">Build your own custom agent</div>
+                    </div>
                   </Button>
+                </div>
+
+                <div className="bg-blue-50 rounded-lg p-6 max-w-2xl mx-auto">
+                  <h4 className="font-semibold text-blue-900 mb-3">What you'll create:</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div className="flex items-center space-x-2 text-blue-800">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span>Intelligent conversation handling</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-blue-800">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span>Natural voice interactions</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-blue-800">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span>24/7 customer support</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-blue-800">
+                      <CheckCircle className="w-4 h-4 text-blue-600" />
+                      <span>Easy integration & testing</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Card>
           ) : (
-            <AgentConfigForm 
+            <EnhancedAgentConfigForm 
               currentStep={currentStep}
               onNextStep={() => setCurrentStep(currentStep + 1)}
               onPrevStep={() => setCurrentStep(currentStep - 1)}
